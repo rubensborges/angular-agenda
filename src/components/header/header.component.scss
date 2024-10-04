@@ -1,0 +1,21 @@
+main{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 24px;
+  background-color: #fff;
+  width: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    .link{
+      cursor: pointer;
+    }
+    .link:hover{
+      text-decoration: underline;
+    }
+     
+  }
+}
