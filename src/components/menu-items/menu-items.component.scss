@@ -5,6 +5,12 @@
   gap: 4px;
 }
 
+.menu:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  color: mediumturquoise;
+}
+
 .menu img{
   width: 30px;
   height: 30px;
