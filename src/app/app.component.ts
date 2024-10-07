@@ -3,11 +3,18 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../components/header/header.component';
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
 import { HomeComponent } from '../components/home/home.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HomeComponent, SidebarComponent],
+  imports: [
+    RouterOutlet,
+    FullCalendarModule,
+    HeaderComponent,
+    HomeComponent,
+    SidebarComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
