@@ -15,3 +15,15 @@ main{
   background-color: white;
   box-shadow: rgba(0,0,0,0.2) 0px 0px 6px 0px;
 }
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+}
+
+input{
+  border-radius: 8px;
+  padding: 6px 12px;
+
+}
