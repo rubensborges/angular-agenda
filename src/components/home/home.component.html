@@ -1,3 +1,18 @@
 <main>
-  <section>Seja bem-vindo ao sistema de cadastro de e-mail dos seus clientes</section>
+  <div class="calendar-container">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+
+  <div *ngIf="isModalVisible" class="modal-overlay">
+    <div class="modal">
+      <h2>Data Selecionada: {{ formattedDate() }}</h2>
+      <div>
+
+        <div>Digite o nome e e-mail para cadastrar um novo paciente:</div>
+        <input type="text">
+        <input type="text">
+      </div>
+      <button (click)="closeModal()">x</button>
+    </div>
+  </div>
 </main>
