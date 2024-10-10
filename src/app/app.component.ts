@@ -7,17 +7,21 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
+  standalone: true, // Standalone component flag
   imports: [
     RouterOutlet,
-    FullCalendarModule,
     HeaderComponent,
     HomeComponent,
     SidebarComponent,
+    FullCalendarModule, // Register FullCalendar here
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'new-angular-project';
+
+  // Optional: Add calendar plugins and events for FullCalendar
+  calendarPlugins = [];
+  calendarEvents = [];
 }
