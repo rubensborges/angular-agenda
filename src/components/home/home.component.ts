@@ -44,6 +44,7 @@ export class HomeComponent {
 
   closeModal(): void {
     this.isModalVisible = false;
+    this.emailForm.reset();
   }
 
   formattedDate(): string {
@@ -121,6 +122,8 @@ export class HomeComponent {
       hour: '2-digit',
       minute: '2-digit',
     },
+    allDaySlot: false,
+
     slotMinTime: '07:00:00',
     slotMaxTime: '20:00:00',
     slotDuration: '0:15:00',
