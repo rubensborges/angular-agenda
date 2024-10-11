@@ -7,11 +7,12 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { ChangeDetectorRef } from '@angular/core';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FullCalendarModule, CommonModule, FormsModule],
+  imports: [FullCalendarModule, ModalComponent, CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -80,18 +81,17 @@ export class HomeComponent implements OnInit {
   closeModal(): void {
     this.isModalVisible = false;
   }
-
   formattedDate(): string {
     const date = new Date(this.selectedDate);
     date.setDate(date.getDate() + 1);
     return date.toLocaleDateString('pt-BR');
   }
 
-  addEvent(): void {
+  addEvent(patient: { name: string; email: string }): void {
     const newEvent = {
-      title: this.patientName,
+      title: patient.name,
       start: this.selectedDate,
-      email: this.patientEmail,
+      email: patient.email,
     };
 
     this.allEvents = [...this.allEvents, newEvent];
