@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
@@ -10,19 +16,29 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FullCalendarModule, CommonModule, FormsModule],
+  imports: [FullCalendarModule, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   isModalVisible: boolean = false;
   selectedDate: string = '';
-  patientName: string = '';
+  dateTime: string = '';
   patientEmail: string = '';
+  patientName: string = '';
   allEvents: any[] = [];
+  emailForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.emailForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required]],
+    });
+  }
 
   handleDateClick(arg: DateClickArg): void {
     this.selectedDate = arg.dateStr;
+    this.dateTime = arg.date.toTimeString().slice(0, 5);
     this.isModalVisible = true;
   }
 
@@ -32,32 +48,49 @@ export class HomeComponent {
 
   formattedDate(): string {
     const date = new Date(this.selectedDate);
-    date.setDate(date.getDate() + 1);
     return date.toLocaleDateString('pt-BR');
   }
 
   ngOnInit(): void {
-    localStorage.getItem('customers');
+    const events = localStorage.getItem('customers');
+    if (events) {
+      this.allEvents = JSON.parse(events);
+    }
+    this.calendarOptions.events = this.allEvents;
   }
 
-  addEvent(): void {
-    const newEvent = {
-      title: this.patientName,
-      start: this.selectedDate,
-      description: this.patientEmail,
-    };
+  onSubmit() {
+    if (this.emailForm.valid) {
+      this.patientName = this.emailForm.value.name;
+      this.patientEmail = this.emailForm.value.email;
 
-    this.allEvents.push(newEvent);
-    localStorage.setItem('customers', JSON.stringify(this.allEvents));
+      const newEvent = {
+        title: this.patientName,
+        start: this.selectedDate,
+        email: this.patientEmail,
+      };
 
-    this.calendarOptions = {
-      ...this.calendarOptions,
-      events: [...this.allEvents],
-    };
+      this.allEvents.push(newEvent);
+      localStorage.setItem('customers', JSON.stringify(this.allEvents));
 
-    this.closeModal();
-    this.patientName = '';
-    this.patientEmail = '';
+      this.calendarOptions.events = [...this.allEvents];
+
+      const subject = 'Este é um assunto de testes em um programa de testes';
+      const body = `Olá ${
+        this.patientName
+      }, como vai? O horário da sua consulta está marcado para o dia ${this.formattedDate()} às ${
+        this.dateTime
+      }.`;
+
+      const mailtoLink = `mailto:${
+        this.patientEmail
+      }?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        body
+      )}`;
+
+      this.closeModal();
+      window.location.href = mailtoLink;
+    }
   }
 
   calendarOptions: CalendarOptions = {
@@ -75,7 +108,7 @@ export class HomeComponent {
       return {
         html: `
           <div>
-            <div>${arg.event.title}</div>
+            <div>${arg.event.title}</div>  <!-- Ensure title is displayed -->
             <div style="position: absolute; bottom: 0; font-size: 10px; color: #ccc; right: 1px;">
               ${arg.timeText}
             </div>

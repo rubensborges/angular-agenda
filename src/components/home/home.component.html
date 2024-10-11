@@ -7,27 +7,23 @@
     <div class="modal">
       <h2>Data Selecionada: {{ formattedDate() }}</h2>
       <div>
-        <div>Digite o nome e e-mail para cadastrar um novo paciente:</div>
-        <div class="input-container">
+        <h3>Digite o nome e e-mail para cadastrar um novo paciente:</h3>
+        <form (ngSubmit)="onSubmit()" [formGroup]="emailForm" class="input-container">
           <div class="input-label">
             <label for="name">Nome</label>
-            <input type="text" id="name" [(ngModel)]="patientName">
+            <input formControlName="name" type="text" id="name" [(ngModel)]="patientName">
           </div>
           <div class="input-label">
             <label for="email">Email</label>
-            <input type="text" id="email" [(ngModel)]="patientEmail">
+            <input formControlName="email" type="email" id="email" [(ngModel)]="patientEmail">
           </div>
-        </div>
+          <div class="button-container">
+            <button type="submit" [disabled]="emailForm.invalid">Confirmar</button>
+            <button type="button" class="cancel" (click)="closeModal()">Cancelar</button>
+          </div>
+        </form>
       </div>
-      <button class="botao" (click)="closeModal()">x</button>
-      <div class="button-container">
-        <button (click)="addEvent()">
-          Confirmar
-        </button>
-        <button (click)="closeModal()">
-          Cancelar
-        </button>
-      </div>
+      <div class="botao" (click)="closeModal()">x</div>
     </div>
   </div>
 </main>
