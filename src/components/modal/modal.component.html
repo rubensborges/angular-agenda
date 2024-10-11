@@ -1,6 +1,6 @@
-<div *ngIf="isModalVisible" class="modal-overlay">
+<div class="modal-overlay">
   <div class="modal">
-    <h2>Data Selecionada: {{ formattedDate() }}</h2>
+    <h2>Data Selecionada: {{ selectedDate }}</h2>
     <div>
       <div>Digite o nome e e-mail para cadastrar um novo paciente:</div>
       <div class="input-container">
@@ -16,12 +16,8 @@
     </div>
     <button class="botao" (click)="closeModal()">x</button>
     <div class="button-container">
-      <button (click)="addEvent()">
-        Confirmar
-      </button>
-      <button (click)="closeModal()">
-        Cancelar
-      </button>
+      <button (click)="confirmEvent()">Confirmar</button>
+      <button (click)="closeModal()">Cancelar</button>
     </div>
   </div>
 </div>
