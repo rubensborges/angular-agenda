@@ -3,5 +3,6 @@
     <full-calendar [options]="calendarOptions"></full-calendar>
   </div>
 
-  <app-modal></app-modal>
+  <app-modal *ngIf="isModalVisible" [selectedDate]="selectedDate" [patientName]="patientName"
+    [patientEmail]="patientEmail" (closeModalEvent)="closeModal()" (addEventEvent)="addEvent($event)"></app-modal>
 </main>
