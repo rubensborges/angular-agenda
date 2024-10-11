@@ -3,6 +3,31 @@
     <full-calendar [options]="calendarOptions"></full-calendar>
   </div>
 
-  <app-modal *ngIf="isModalVisible" [selectedDate]="selectedDate" [patientName]="patientName"
-    [patientEmail]="patientEmail" (closeModalEvent)="closeModal()" (addEventEvent)="addEvent($event)"></app-modal>
+  <div *ngIf="isModalVisible" class="modal-overlay">
+    <div class="modal">
+      <h2>Data Selecionada: {{ formattedDate() }}</h2>
+      <div>
+        <div>Digite o nome e e-mail para cadastrar um novo paciente:</div>
+        <div class="input-container">
+          <div class="input-label">
+            <label for="name">Nome</label>
+            <input type="text" id="name" [(ngModel)]="patientName">
+          </div>
+          <div class="input-label">
+            <label for="email">Email</label>
+            <input type="text" id="email" [(ngModel)]="patientEmail">
+          </div>
+        </div>
+      </div>
+      <button class="botao" (click)="closeModal()">x</button>
+      <div class="button-container">
+        <button (click)="addEvent()">
+          Confirmar
+        </button>
+        <button (click)="closeModal()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
 </main>
