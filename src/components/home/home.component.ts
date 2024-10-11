@@ -68,6 +68,7 @@ export class HomeComponent {
       center: 'title',
       right: 'dayGridMonth timeGridWeek timeGridDay',
     },
+    height: '78vh',
     nowIndicator: true,
     eventColor: '#6666e2',
     eventContent: (arg) => {
